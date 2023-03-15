@@ -1,0 +1,29 @@
+function solution(queue1, queue2) {
+    let sum1 = queue1.reduce((prev, curr) => prev + curr)
+    let sum2 = queue2.reduce((prev, curr) => prev + curr)
+    if (sum1 === sum2) return 0
+
+    const limit = (sum1 + sum2) / 2
+
+    const sumQ1Q2 = [...queue2, ...queue1, ...queue2, ...queue1]
+    let leftIndex = queue1.length
+    let rightIndex = queue1.length + queue2.length
+
+    let count = 0
+    while (count < sumQ1Q2.length) {
+        if (sum1 > limit) {
+            const remove = sumQ1Q2[leftIndex]
+            sum1 -= remove
+            leftIndex++
+            count++
+        } else if (sum1 < limit) {
+            const remove = sumQ1Q2[rightIndex]
+            sum1 += remove
+            rightIndex++
+            count++
+        } else {
+            return count
+        }
+    }
+    return -1
+}
