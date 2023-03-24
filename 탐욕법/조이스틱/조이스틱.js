@@ -1,0 +1,42 @@
+function solution(name) {
+    const alpha = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ]
+    let answer = 0
+    let movement = name.length - 1
+    for (let i = 0; i < name.length; i++) {
+        const indexOfName = alpha.indexOf(name[i])
+        const num = indexOfName > 13 ? 26 - indexOfName : indexOfName
+        answer += num
+        let index = i + 1
+        while (index < name.length && name[index] === 'A') index++
+        movement = Math.min(movement, i * 2 + name.length - index)
+        movement = Math.min(movement, (name.length - index) * 2 + i)
+    }
+    return answer + movement
+}
