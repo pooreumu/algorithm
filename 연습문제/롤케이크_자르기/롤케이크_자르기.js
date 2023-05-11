@@ -1,24 +1,38 @@
 function solution(topping) {
-    let result = 0
-    const cuttingLeft = new Set()
-    const cuttingRight = new Set()
-    const leftToppingCount = []
-    const rightToppingCount = []
-    for (let i = 0; i < topping.length; i++) {
-        cuttingLeft.add(topping[i])
-        cuttingRight.add(topping[topping.length - 1 - i])
+    const [cuttingLeft, cuttingRight, leftToppingCount, rightToppingCount] =
+        topping.reduce(
+            (
+                [
+                    cuttingLeft,
+                    cuttingRight,
+                    leftToppingCount,
+                    rightToppingCount,
+                ],
+                cur,
+                i,
+                origin
+            ) => {
+                cuttingLeft.add(origin[i])
+                cuttingRight.add(origin[topping.length - 1 - i])
 
-        leftToppingCount.push(cuttingLeft.size)
-        rightToppingCount.push(cuttingRight.size)
-    }
+                leftToppingCount.push(cuttingLeft.size)
+                rightToppingCount.push(cuttingRight.size)
 
-    for (let i = 0; i < leftToppingCount.length; i++) {
-        if (
-            leftToppingCount[i] ===
-            rightToppingCount[rightToppingCount.length - 2 - i]
+                return [
+                    cuttingLeft,
+                    cuttingRight,
+                    leftToppingCount,
+                    rightToppingCount,
+                ]
+            },
+            [new Set(), new Set(), [], []]
         )
-            result++
-    }
 
-    return result
+    return leftToppingCount.reduce(
+        (acc, cur, i) =>
+            cur === rightToppingCount[rightToppingCount.length - 2 - i]
+                ? acc + 1
+                : acc,
+        0
+    )
 }
