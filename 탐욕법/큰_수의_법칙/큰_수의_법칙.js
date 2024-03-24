@@ -9,6 +9,7 @@ const [_, M, K] = input[0].split(' ')
 const N = input[1].split(' ').map((v) => Number(v))
 
 console.log(solution(N, +M, +K))
+console.log(solution2(N, +M, +K))
 
 /**
  * @description 배열 n의 요소를 m번 더해서 가장 큰수를 만드는 함수
@@ -34,4 +35,10 @@ function solution(n, m, k) {
     }
 
     return result
+}
+
+function solution2(n, m, k) {
+    n.sort((a, b) => b - a)
+
+    return (n[0] * k + n[1]) * parseInt(m / k) + ((n[0] * m) % k)
 }
